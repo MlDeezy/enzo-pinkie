@@ -1,1 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Pinkie 💘</title>
+</head>
+
+<body style="
+margin:0;
+height:100vh;
+overflow:hidden;
+font-family:'Arial',sans-serif;
+background:linear-gradient(135deg,#ff4f9a,#ff8fcf);
+display:flex;
+justify-content:center;
+align-items:center;
+">
+
+<!-- TAP SCREEN -->
+<div id="startScreen" style="
+position:fixed;
+inset:0;
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:26px;
+color:white;
+background:linear-gradient(135deg,#ff4f9a,#ff8fcf);
+cursor:pointer;
+text-align:center;
+">
+Tap anywhere 💖
+</div>
+
+<audio id="song">
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- HEARTS -->
+<div id="hearts"></div>
+
+<!-- CARD -->
+<div id="card" style="
+background:white;
+width:90%;
+max-width:340px;
+padding:30px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,0.25);
+transition:all 0.6s ease;
+">
+
+<h1 style="color:#ff2f7d;margin-bottom:10px;">Hey Pinkie 💖</h1>
+<p id="question" style="font-size:18px;">Will you be my Valentine?</p>
+
+<div id="buttons" style="position:relative;height:120px;margin-top:20px;">
+<button id="yesBtn" style="
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+padding:14px 30px;
+border-radius:30px;
+border:none;
+font-size:16px;
+background:#ff2f7d;
+color:white;
+cursor:pointer;
+">
+Yes 💕
+</button>
+
+<button id="noBtn" style="
+position:absolute;
+top:65px;
+left:50%;
+transform:translateX(-50%);
+padding:14px 30px;
+border-radius:30px;
+border:none;
+font-size:16px;
+background:#ddd;
+cursor:pointer;
+">
+No 💔
+</button>
+</div>
+
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result" style="
+display:none;
+position:absolute;
+text-align:center;
+padding:20px;
+">
+<h1 style="color:white;font-size:32px;">YAYYYY 🥹💘</h1>
+<p style="color:white;font-size:18px;">Can’t wait 💞</p>
+<img src="gif.gif" style="
+width:260px;
+max-width:90%;
+border-radius:20px;
+margin-top:15px;
+">
+</div>
+
+<script>
+const startScreen = document.getElementById("startScreen");
+const song = document.getElementById("song");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const card = document.getElementById("card");
+const result = document.getElementById("result");
+const hearts = document.getElementById("hearts");
+
+// Start music
+startScreen.onclick = async () => {
+  try {
+    await song.play();
+    startScreen.style.display = "none";
+  } catch {
+    alert("Tap again to enable sound 🔊");
+  }
+};
+
+// NO button dodge
+noBtn.onmouseover = () => {
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 80;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+};
+
+// YES clicked
+yesBtn.onclick = () => {
+  card.style.transform = "scale(0.8)";
+  card.style.opacity = "0";
+  setTimeout(() => {
+    card.style.display = "none";
+    result.style.display = "block";
+  }, 500);
+};
+
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.innerHTML = "💖";
+  heart.style.position = "fixed";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.bottom = "-20px";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  heart.style.opacity = 0.8;
+  heart.style.transition = "transform 5s linear, opacity 5s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.style.transform = "translateY(-110vh)";
+    heart.style.opacity = "0";
+  }, 100);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 5000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
 
